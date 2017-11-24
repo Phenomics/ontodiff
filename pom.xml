@@ -40,6 +40,7 @@
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
+    
     <plugin>
      <groupId>org.apache.maven.plugins</groupId>
      <artifactId>maven-compiler-plugin</artifactId>
@@ -49,6 +50,7 @@
       <target>1.8</target>
      </configuration>
     </plugin>
+    
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
@@ -57,6 +59,27 @@
           <target/>
         </configuration>
       </plugin>
+      
+      <plugin>
+     <artifactId>maven-assembly-plugin</artifactId>
+     <configuration>
+      <descriptorRefs>
+       <descriptorRef>jar-with-dependencies</descriptorRef>
+      </descriptorRefs>
+      <archive>
+       <manifest>
+        <mainClass>de.phenomics.HpoDiff</mainClass>
+       </manifest>
+      </archive>
+     </configuration>
+     <executions>
+      <execution>
+       <phase>package</phase>
+       <goals><goal>single</goal></goals>
+      </execution>
+     </executions>
+    </plugin>
+      
     </plugins>
   </build>
 </project>
