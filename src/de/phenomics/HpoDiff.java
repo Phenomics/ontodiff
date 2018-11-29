@@ -13,9 +13,6 @@ import java.util.stream.Collectors;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 
-import ontologizer.ontology.Ontology;
-import ontologizer.ontology.Term;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -24,6 +21,8 @@ import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import ontologizer.ontology.Ontology;
+import ontologizer.ontology.Term;
 import util.OntologyUtil;
 
 /**
