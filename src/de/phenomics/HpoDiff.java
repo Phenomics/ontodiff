@@ -84,6 +84,7 @@ public class HpoDiff {
 
 		String outfile = f1.getParentFile().getAbsolutePath() + File.separatorChar + "hpodiff_" + dv_old + "_to_"
 				+ dv_new + ".xlsx";
+		System.out.println("write diff to " + outfile);
 		createDiff(olderOntology, youngerOntology, outfile);
 
 	}
@@ -111,7 +112,6 @@ public class HpoDiff {
 		for (Term newTerm : youngerOntology) {
 			// check if old ontology knew about this term
 			if (olderOntology.getTermIncludingAlternatives(newTerm.getIDAsString()) == null) {
-				System.out.println("new term: " + newTerm);
 				Row row = sheet0.createRow((short) rowIndex++);
 				int columnIndex = 0;
 
@@ -143,14 +143,12 @@ public class HpoDiff {
 				int columnIndex = 0;
 				if (!isOldObsolete && isNewObsolete) { // normal procedure -> a
 														// term got obsoleted
-					System.out.println("term obsoletion\t" + oldTerm + "\t" + correspondingNewTerm);
 
 					row.createCell(columnIndex)
 							.setCellValue(createHelper.createRichTextString("valid term obsoletion"));
 
 				}
 				else {
-					System.out.println("invalid obsoletion\t" + oldTerm + "\t" + correspondingNewTerm);
 					row.createCell(columnIndex)
 							.setCellValue(createHelper.createRichTextString("invalid term obsoletion"));
 
@@ -182,7 +180,6 @@ public class HpoDiff {
 			if (!oldLabel.equals(newLabel)) {
 				Row row = sheet2.createRow((short) rowIndex++);
 				int columnIndex = 0;
-				System.out.println("term label change\t" + oldTerm + "\t" + correspondingNewTerm);
 				row.createCell(columnIndex++).setCellValue(createHelper.createRichTextString("term label change"));
 				row.createCell(columnIndex++).setCellValue(createHelper.createRichTextString(oldTerm.getIDAsString()));
 				row.createCell(columnIndex++).setCellValue(createHelper.createRichTextString(oldTerm.getName()));
@@ -226,12 +223,6 @@ public class HpoDiff {
 				row.createCell(columnIndex++).setCellValue(createHelper.createRichTextString(res2.toString()));
 				row.createCell(columnIndex++).setCellValue(createHelper.createRichTextString(res3.toString()));
 
-				System.out.println(" -");
-				System.out.println(oldTerm + " vs. " + correspondingNewTerm);
-				System.out.println(oldSynonyms + " vs. " + newSynonyms);
-				System.out.println("> in common:" + result);
-				System.out.println("> only in old version:" + res2);
-				System.out.println("> only in new version: " + res3);
 			}
 
 		}
@@ -258,9 +249,6 @@ public class HpoDiff {
 			if (def1.equals(def2))
 				continue;
 
-			System.out.println(oldTerm);
-			System.out.println("old def:" + def1);
-			System.out.println("new def:" + def2);
 			Row row = sheet4.createRow((short) rowIndex++);
 			int columnIndex = 0;
 			row.createCell(columnIndex++).setCellValue(createHelper.createRichTextString("text-definition change"));
@@ -292,12 +280,6 @@ public class HpoDiff {
 			SetView<Term> res3 = Sets.difference(parentsNew, parentsOld);
 
 			if (res2.size() != 0 || res3.size() != 0) {
-				System.out.println("\n - parent set");
-				System.out.println(oldTerm + " vs. " + correspondingNewTerm);
-				System.out.println(parentsOld + " vs. " + parentsNew);
-				System.out.println("> in common:" + result);
-				System.out.println("> only in old version:" + res2);
-				System.out.println("> only in new version: " + res3);
 
 				Row row = sheet5.createRow((short) rowIndex++);
 				int columnIndex = 0;
