@@ -82,7 +82,8 @@ public class HpoDiff {
 		System.out.println("older ontology from " + dv_old);
 		System.out.println("younger ontology from " + dv_new);
 
-		String outfile = f1.getAbsolutePath() + "hpodiff_" + dv_old + "_to_" + dv_new + ".xlsx";
+		String outfile = f1.getParentFile().getAbsolutePath() + File.separatorChar + "hpodiff_" + dv_old + "_to_"
+				+ dv_new + ".xlsx";
 		createDiff(olderOntology, youngerOntology, outfile);
 
 	}
