@@ -134,7 +134,15 @@ public class HpoDiff {
 		rowIndex = createHeaderRow(createHelper, style, rowIndex, sheet1, headersObsoletions);
 
 		for (Term oldTerm : olderOntology.getAllTerms()) {
-			Term correspondingNewTerm = youngerOntology.getTerm(oldTerm.getIDAsString());
+			Term correspondingNewTerm = youngerOntology.getTermIncludingAlternatives(oldTerm.getIDAsString());
+			if (correspondingNewTerm == null) {
+				correspondingNewTerm = youngerOntology.getTermFromObsoletes(oldTerm.getIDAsString());
+				if (correspondingNewTerm == null) {
+					throw new RuntimeException(
+							"Fatal: cannot find term with ID " + oldTerm.getIDAsString() + " in new ontology");
+				}
+			}
+
 			boolean isOldObsolete = oldTerm.isObsolete();
 			boolean isNewObsolete = correspondingNewTerm.isObsolete();
 
@@ -173,6 +181,15 @@ public class HpoDiff {
 		// label changes
 		for (Term oldTerm : olderOntology) {
 			Term correspondingNewTerm = youngerOntology.getTerm(oldTerm.getIDAsString());
+
+			if (correspondingNewTerm == null) {
+				correspondingNewTerm = youngerOntology.getTermFromObsoletes(oldTerm.getIDAsString());
+				if (correspondingNewTerm == null) {
+					throw new RuntimeException(
+							"Fatal: cannot find term with ID " + oldTerm.getIDAsString() + " in new ontology");
+				}
+			}
+
 			if (correspondingNewTerm.isObsolete())
 				continue;
 			String oldLabel = oldTerm.getName();
@@ -201,6 +218,13 @@ public class HpoDiff {
 		// synonym changes
 		for (Term oldTerm : olderOntology) {
 			Term correspondingNewTerm = youngerOntology.getTerm(oldTerm.getIDAsString());
+			if (correspondingNewTerm == null) {
+				correspondingNewTerm = youngerOntology.getTermFromObsoletes(oldTerm.getIDAsString());
+				if (correspondingNewTerm == null) {
+					throw new RuntimeException(
+							"Fatal: cannot find term with ID " + oldTerm.getIDAsString() + " in new ontology");
+				}
+			}
 			if (correspondingNewTerm.isObsolete())
 				continue;
 			HashSet<String> oldSynonyms = new HashSet<>(oldTerm.getSynonymsArrayList());
@@ -236,6 +260,13 @@ public class HpoDiff {
 		// definition changes
 		for (Term oldTerm : olderOntology) {
 			Term correspondingNewTerm = youngerOntology.getTerm(oldTerm.getIDAsString());
+			if (correspondingNewTerm == null) {
+				correspondingNewTerm = youngerOntology.getTermFromObsoletes(oldTerm.getIDAsString());
+				if (correspondingNewTerm == null) {
+					throw new RuntimeException(
+							"Fatal: cannot find term with ID " + oldTerm.getIDAsString() + " in new ontology");
+				}
+			}
 			if (correspondingNewTerm.isObsolete())
 				continue;
 
@@ -269,6 +300,13 @@ public class HpoDiff {
 		// parent changes
 		for (Term oldTerm : olderOntology) {
 			Term correspondingNewTerm = youngerOntology.getTerm(oldTerm.getIDAsString());
+			if (correspondingNewTerm == null) {
+				correspondingNewTerm = youngerOntology.getTermFromObsoletes(oldTerm.getIDAsString());
+				if (correspondingNewTerm == null) {
+					throw new RuntimeException(
+							"Fatal: cannot find term with ID " + oldTerm.getIDAsString() + " in new ontology");
+				}
+			}
 			if (correspondingNewTerm.isObsolete())
 				continue;
 
